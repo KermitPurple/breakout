@@ -7,16 +7,21 @@ using namespace std;
 
 const int HEIGHT=15,WIDTH=35,rgb[6]={4,6,14,10,11,1};
 int grid[HEIGHT][WIDTH] = {0};//zero in grid means gone 1 means there is still a box there
+int tick = 0;
 
-//////////////TODO:create tick timer////////////////////
-
-
+//////////////create tick timer////////////////////
+void newtick()
+{
+	Sleep(20);
+	tick++;
+	if(tick > 10000);
+}
 
 //////////////TODO:create directions////////////////////
 
 
 
-//////////////TODO:Generate arrays////////////////////
+//////////////create grid////////////////////
 void PrintBox()
 {
 	for(int i = 0;i < HEIGHT;i++)
@@ -26,6 +31,7 @@ void PrintBox()
 			color(rgb[(i+j)%6]);
 			cout<< char(219)<<char(219)<<char(219);
 			grid[i][j]=1;
+			newtick();
 		}
 		cout << endl;
 	}
@@ -36,7 +42,7 @@ void PrintBox()
 int main()
 {
 	PrintBox();
-
+	cout << tick;
 
 
 
