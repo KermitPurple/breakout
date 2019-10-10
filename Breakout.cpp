@@ -79,6 +79,7 @@ void PrintBox()
 	}
 	color(7);
 }
+
 //////////////print paddle//////////////////////
 void PrintPad()
 {
@@ -94,18 +95,28 @@ void MovePad(char leftright)
 	if(leftright == 'L')
 	{
 		paddle.x--;
-		gotoxy(paddle.x,paddle.y);
-		cout <<char(219);
-		gotoxy(paddle.x+21,paddle.y);
-		cout << " ";
+		if(paddle.x < 1)
+			paddle.x=1;
+		else
+		{
+			gotoxy(paddle.x,paddle.y);
+			cout <<char(219);
+			gotoxy(paddle.x+21,paddle.y);
+			cout << " ";
+		}
 	}
 	else if(leftright == 'R')
 	{
 		paddle.x++;
-		gotoxy(paddle.x-1,paddle.y);
-		cout <<" ";
-		gotoxy(paddle.x+20,paddle.y);
-		cout <<char(219);
+		if(paddle.x > 85)
+			paddle.x=85;
+		else
+		{
+			gotoxy(paddle.x-1,paddle.y);
+			cout <<" ";
+			gotoxy(paddle.x+20,paddle.y);
+			cout <<char(219);
+		}
 	}
 }
 
