@@ -129,7 +129,7 @@ void bouncewall()
 	}
 	else if(dir=="right")
 	{
-		dir="left"
+		dir="left";
 	}
 	else if(dir=="up-left")
 	{
@@ -141,7 +141,7 @@ void bouncewall()
 	}
 	else if(dir=="down-left")
 	{
-		dir="down-right"
+		dir="down-right";
 	}
 	else if(dir=="down-right")
 	{
@@ -155,27 +155,61 @@ void bounceceil()
 	{
 		dir="down";
 	}
-	else if(dir=="down")
-	{
-		dir="up";
-	}
 	else if(dir=="up-left")
 	{
 		dir="down-left";
 	}
 	else if(dir=="up-right")
 	{
-		dir="down-rigtht;
+		dir="down-right";
 	}
 }
+void bouncepad()
+{
+	if(ball.x>=paddle.x&&ball.x<=paddle.x+6)
+		if(dir=="down")
+		{
+			dir="up-left";
+		}
+		if(dir=="down-right")
+		{
+			dir="up";
+		}
+	else if(ball.x>=paddle.x+7&&ball.x<=paddle.x+13)
+		if(dir=="down")
+		{
+			dir="up";
+		}
+		if(dir=="down-left")
+		{
+			dir="up-left";
+		}
+		if(dir=="down-right")
+		{
+			dir="up-right";
+		}
+	else if(ball.x>=paddle.x+14&&ball.x<=paddle.x+20)
+		if(dir=="down")
+		{
+			dir="up-right";
+		}
+		if(dir=="down-left")
+		{
+			dir="up";
+		}
 
+}
 //////////////TODO:detect colision////////////////////
 void detect()
 {
-	if(ball.x==0||ball.x==
+	if(ball.x==0||ball.x==105)
+		bouncewall();
+	else if(ball.y<=0)
+		bounceceil();
+	else if(ball.y==paddle.y-1)
+		bouncepad();
 
 }
-
 
 int main()
 {
@@ -215,6 +249,7 @@ int main()
 		}//if kbhit
 		if(tick%8==0)		
 		{
+			detect();
 			gotoxy(ball.x,ball.y);
 			cout << " ";	
 			MoveBall();
@@ -223,7 +258,6 @@ int main()
 		}
 		newtick();
 	}//while
-
 
 	return 0;
 }
