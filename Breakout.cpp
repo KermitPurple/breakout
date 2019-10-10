@@ -7,7 +7,7 @@
 using namespace std;
 
 const int HEIGHT=15,WIDTH=35,rgb[6]={4,6,14,10,11,1};
-int grid[HEIGHT][WIDTH] = {0};//zero in grid means gone 1 means there is still a box there
+int tick=0,grid[HEIGHT][WIDTH] = {0};//zero in grid means gone 1 means there is still a box there
 string dir= "";
 struct{
 	int x;
@@ -59,6 +59,9 @@ void MoveBall()
 void newtick()
 {
 	Sleep(10);
+	tick++;
+	if(tick >100000)
+		tick=1;
 }
 
 //////////////create grid////////////////////
@@ -115,16 +118,18 @@ int main()
 	char ch;
 	paddle.x = 43;
 	paddle.y = 26;
+	ball.x = paddle.x+10;
+	ball.y = paddle.y-1;
+	dir="up";
 	ShowConsoleCursor(false);
 	system("cls");
 	PrintBox();
 	gotoxy(paddle.x,paddle.y);
 	PrintPad();
-	while(1)
-	{
-		while(kbhit)
+      while(1)
+      {
+		if(kbhit)/////////DETECT IMPUT///////
 		{
-
 			ch = _getch();
 			if(ch==-32)
 			{
@@ -144,6 +149,15 @@ int main()
 				exit(0);
 			}
 		}//if kbhit
+		if(tick%4==0)		
+		{
+			gotoxy(ball.x,ball.y);
+			cout << " ";	
+			MoveBall();
+			gotoxy(ball.x,ball.y);
+			cout << char(254);
+		}
+		newtick();
 	}//while
 
 
