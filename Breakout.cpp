@@ -119,9 +119,62 @@ void MovePad(char leftright)
 		}
 	}
 }
+//////////////TODO:bounce//////////////////////
+void bouncewall()
+{
+	
+	if(dir=="left")
+	{
+		dir="right";
+	}
+	else if(dir=="right")
+	{
+		dir="left"
+	}
+	else if(dir=="up-left")
+	{
+		dir="up-right";
+	}
+	else if(dir=="up-right")
+	{
+		dir="up-left";
+	}
+	else if(dir=="down-left")
+	{
+		dir="down-right"
+	}
+	else if(dir=="down-right")
+	{
+		dir="down-left";
+	}
+
+}
+void bounceceil()
+{
+	if(dir=="up")
+	{
+		dir="down";
+	}
+	else if(dir=="down")
+	{
+		dir="up";
+	}
+	else if(dir=="up-left")
+	{
+		dir="down-left";
+	}
+	else if(dir=="up-right")
+	{
+		dir="down-rigtht;
+	}
+}
 
 //////////////TODO:detect colision////////////////////
+void detect()
+{
+	if(ball.x==0||ball.x==
 
+}
 
 
 int main()
@@ -131,7 +184,7 @@ int main()
 	paddle.y = 26;
 	ball.x = paddle.x+10;
 	ball.y = paddle.y-1;
-	dir="up";
+	dir="up-left";
 	ShowConsoleCursor(false);
 	system("cls");
 	PrintBox();
