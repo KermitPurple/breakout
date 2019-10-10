@@ -128,7 +128,7 @@ int main()
 	PrintPad();
       while(1)
       {
-		if(kbhit)/////////DETECT IMPUT///////
+		if(kbhit())/////////DETECT IMPUT///////
 		{
 			ch = _getch();
 			if(ch==-32)
@@ -149,7 +149,7 @@ int main()
 				exit(0);
 			}
 		}//if kbhit
-		if(tick%4==0)		
+		if(tick%8==0)		
 		{
 			gotoxy(ball.x,ball.y);
 			cout << " ";	
