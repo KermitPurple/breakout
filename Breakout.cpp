@@ -214,6 +214,19 @@ void bouncepad()
 		}
 
 }
+//////////////detect win   ////////////////////
+bool Won()
+{
+	for(int i = 0; i < HEIGHT;i++)
+	{
+		for(int j = 0; j < WIDTH;j++)
+		{
+			if(grid[i][j]==1)
+				return false;
+		}
+	}
+	return true;
+}
 //////////////detect colision////////////////////
 void detect()
 {
@@ -336,7 +349,7 @@ void detect()
 		}//for i
 	}//else
 
-}
+}//detect
 
 int main()
 {
@@ -380,7 +393,7 @@ int main()
 					exit(0);
 				}
 			}//if kbhit
-			if(tick%4==0)		
+			if(tick%4==0)//how often ball moves
 			{
 				detect();
 				gotoxy(ball.x,ball.y);
@@ -390,8 +403,9 @@ int main()
 				cout << char(254);
 				gotoxy(8,paddle.y+2);
 				cout << score;
-				if(!win)
+				if(!win||Won())
 					break;
+
 			}
 			newtick();
 		}//while
@@ -399,18 +413,20 @@ int main()
 		system("cls");
 		if(!win)
 		{
-			cout << "you lose!" << endl << "your score was " << score << endl;
+			cout << "you lose!" << endl;
 		}
 		else
 		{
+			cout << "you win!" <<endl;
 		}
-			while(yesno != 'n'&&yesno != 'N'&&yesno != 'y'&& yesno != 'Y')
-			{
-				cout << "Play again? y/n\n";
-				cin >> yesno;
-			}
-			if(yesno != 'y'&&yesno !='Y')
-				break;
+		cout << "your score was " << score << endl;
+		while(yesno != 'n'&&yesno != 'N'&&yesno != 'y'&& yesno != 'Y')
+		{
+			cout << "Play again? y/n\n";
+			cin >> yesno;
+		}
+		if(yesno != 'y'&&yesno !='Y')
+			break;
 	}while(running);
 			
 
