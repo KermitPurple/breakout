@@ -155,6 +155,10 @@ void bounceceil()
 	{
 		dir="down";
 	}
+	else if(dir=="down")
+	{
+		dir="up";
+	}
 	else if(dir=="up-left")
 	{
 		dir="down-left";
@@ -163,8 +167,17 @@ void bounceceil()
 	{
 		dir="down-right";
 	}
+	else if(dir=="down-left")
+	{
+		dir="up-left";
+	}
+	else if(dir=="down-right")
+	{
+		dir="up-right";
+	}
+
 }
-void bouncepad()
+void bouncepad()//TODO:this is fucking broke man fix it.
 {
 	if(ball.x>=paddle.x&&ball.x<=paddle.x+6)
 		if(dir=="down")
@@ -208,6 +221,108 @@ void detect()
 		bounceceil();
 	else if(ball.y==paddle.y-1)
 		bouncepad();
+	else if(ball.y==paddle.y+1)
+		exit(0);//TODO: make a lose
+	else
+	{
+		for(int i = 0;i<HEIGHT;i++)
+		{
+			for(int j = 0; j < WIDTH;j++)
+			{
+				if(grid[i][j]==1)
+				{
+					if(dir=="up-right")
+					{
+						if((ball.x>=((j*3)-1))&&(ball.x<=((j*3)+1))&&(ball.y==(i+1)))
+						{
+							dir="down-right";
+							grid[i][j]=0;
+							gotoxy((j*3),i);
+							cout << "   ";
+						}//if
+						else if((ball.x>=((j*3)-1))&&(ball.y==(i)))
+						{
+							dir="up-left";
+							grid[i][j]=0;
+							gotoxy((j*3),i);
+							cout << "   ";
+						}//else if
+					}//up-right
+					else if(dir=="up-left")
+					{
+						if((ball.x>=((j*3)+1))&&(ball.x<=((j*3)+3))&&(ball.y==(i+1)))
+						{
+							dir="down-left";
+							grid[i][j]=0;
+							gotoxy((j*3),i);
+							cout << "   ";
+						}//if
+						else if((ball.x>=((j*3)+1))&&(ball.y==(i)))
+						{
+							dir="up-right";
+							grid[i][j]=0;
+							gotoxy((j*3),i);
+							cout << "   ";
+						}//else if
+					}//up-left
+					else if(dir=="up")
+					{
+						if((ball.x>=(j*3))&&(ball.x<=((j*3)+2))&&(ball.y==(i+1)))
+						{
+							dir="down";
+							grid[i][j]=0;
+							gotoxy((j*3),i);
+							cout << "   ";
+						}//if
+					}//up
+					else if(dir=="down-right")
+					{
+						if((ball.x>=((j*3)-1))&&(ball.x<=((j*3)+1))&&(ball.y==(i-1)))
+						{
+							dir="up-right";
+							grid[i][j]=0;
+							gotoxy((j*3),i);
+							cout << "   ";
+						}//if
+						else if((ball.x>=((j*3)-1))&&(ball.y==(i)))
+						{
+							dir="down-left";
+							grid[i][j]=0;
+							gotoxy((j*3),i);
+							cout << "   ";
+						}//else if
+					}//down-right
+					else if(dir=="down-left")
+					{
+						if((ball.x>=((j*3)+1))&&(ball.x<=((j*3)+3))&&(ball.y==(i-1)))
+						{
+							dir="up-left";
+							grid[i][j]=0;
+							gotoxy((j*3),i);
+							cout << "   ";
+						}//if
+						else if((ball.x>=(j*3)+4)&&(ball.y==(i)))
+						{
+							dir="down-right";
+							grid[i][j]=0;
+							gotoxy((j*3),i);
+							cout << "   ";
+						}//else if
+					}//down-left
+					else if(dir=="down")
+					{
+						if((ball.x>=(j*3))&&(ball.x<=((j*3)+2))&&(ball.y==(i-1)))
+						{
+							dir="up";
+							grid[i][j]=0;
+							gotoxy((j*3),i);
+							cout << "   ";
+						}//if
+					}//down
+				}//if
+			}//for j
+		}//for i
+	}//else
 
 }
 
@@ -247,7 +362,7 @@ int main()
 				exit(0);
 			}
 		}//if kbhit
-		if(tick%8==0)		
+		if(tick%4==0)		
 		{
 			detect();
 			gotoxy(ball.x,ball.y);
