@@ -7,8 +7,10 @@
 using namespace std;
 
 const int HEIGHT=15,WIDTH=35,rgb[6]={4,6,14,10,11,1};
-int tick=0,grid[HEIGHT][WIDTH] = {0};//zero in grid means gone 1 means there is still a box there
+int score = 0, tick=0,grid[HEIGHT][WIDTH] = {0};//zero in grid means gone 1 means there is still a box there
 string dir= "";
+char yesno;
+bool win=true,running = true;
 struct{
 	int x;
 	int y;
@@ -119,7 +121,7 @@ void MovePad(char leftright)
 		}
 	}
 }
-//////////////TODO:bounce//////////////////////
+//////////////bounce//////////////////////
 void bouncewall()
 {
 	
@@ -177,7 +179,7 @@ void bounceceil()
 	}
 
 }
-void bouncepad()//TODO:this is fucking broke man fix it.
+void bouncepad()
 {
 	if(ball.x>=paddle.x&&ball.x<=paddle.x+6)
 		if(dir=="down")
@@ -212,17 +214,17 @@ void bouncepad()//TODO:this is fucking broke man fix it.
 		}
 
 }
-//////////////TODO:detect colision////////////////////
+//////////////detect colision////////////////////
 void detect()
 {
 	if(ball.x==0||ball.x==105)
 		bouncewall();
 	else if(ball.y<=0)
 		bounceceil();
-	else if(ball.y==paddle.y-1&&ball.x>=paddle.x&&ball.x<=paddle.x+20)
+	else if(ball.y==paddle.y-1&&ball.x>=paddle.x-1&&ball.x<=paddle.x+20)
 		bouncepad();
 	else if(ball.y==paddle.y+1)
-		exit(0);//TODO: make a lose
+		win = false;
 	else
 	{
 		for(int i = 0;i<HEIGHT;i++)
@@ -239,6 +241,7 @@ void detect()
 							grid[i][j]=0;
 							gotoxy((j*3),i);
 							cout << "   ";
+							score += 100;
 						}//if
 						else if((ball.x>=((j*3)-1))&&(ball.y==(i)))
 						{
@@ -246,6 +249,7 @@ void detect()
 							grid[i][j]=0;
 							gotoxy((j*3),i);
 							cout << "   ";
+							score += 100;
 						}//else if
 					}//up-right
 					else if(dir=="up-left")
@@ -256,6 +260,7 @@ void detect()
 							grid[i][j]=0;
 							gotoxy((j*3),i);
 							cout << "   ";
+							score += 100;
 						}//if
 						else if((ball.x>=((j*3)+1))&&(ball.y==(i)))
 						{
@@ -263,6 +268,7 @@ void detect()
 							grid[i][j]=0;
 							gotoxy((j*3),i);
 							cout << "   ";
+							score += 100;
 						}//else if
 					}//up-left
 					else if(dir=="up")
@@ -273,6 +279,7 @@ void detect()
 							grid[i][j]=0;
 							gotoxy((j*3),i);
 							cout << "   ";
+							score += 100;
 						}//if
 					}//up
 					else if(dir=="down-right")
@@ -283,6 +290,7 @@ void detect()
 							grid[i][j]=0;
 							gotoxy((j*3),i);
 							cout << "   ";
+							score += 100;
 						}//if
 						else if((ball.x>=((j*3)-1))&&(ball.y==(i)))
 						{
@@ -290,6 +298,7 @@ void detect()
 							grid[i][j]=0;
 							gotoxy((j*3),i);
 							cout << "   ";
+							score += 100;
 						}//else if
 					}//down-right
 					else if(dir=="down-left")
@@ -300,6 +309,7 @@ void detect()
 							grid[i][j]=0;
 							gotoxy((j*3),i);
 							cout << "   ";
+							score += 100;
 						}//if
 						else if((ball.x>=(j*3)+4)&&(ball.y==(i)))
 						{
@@ -307,6 +317,7 @@ void detect()
 							grid[i][j]=0;
 							gotoxy((j*3),i);
 							cout << "   ";
+							score += 100;
 						}//else if
 					}//down-left
 					else if(dir=="down")
@@ -317,6 +328,7 @@ void detect()
 							grid[i][j]=0;
 							gotoxy((j*3),i);
 							cout << "   ";
+							score += 100;
 						}//if
 					}//down
 				}//if
@@ -328,51 +340,79 @@ void detect()
 
 int main()
 {
-	char ch;
-	paddle.x = 43;
-	paddle.y = 26;
-	ball.x = paddle.x+10;
-	ball.y = paddle.y-1;
-	dir="up-left";
-	ShowConsoleCursor(false);
-	system("cls");
-	PrintBox();
-	gotoxy(paddle.x,paddle.y);
-	PrintPad();
-      while(1)
-      {
-		if(kbhit())/////////DETECT IMPUT///////
-		{
-			ch = _getch();
-			if(ch==-32)
+	do{
+		char ch;
+		paddle.x = 43;
+		paddle.y = 26;
+		ball.x = paddle.x+10;
+		ball.y = paddle.y-1;
+		dir="up-left";
+		yesno = ' ';
+		score = 0;
+		win = true;
+		ShowConsoleCursor(false);
+		system("cls");
+		PrintBox();
+		gotoxy(paddle.x,paddle.y);
+		PrintPad();
+		gotoxy(1,paddle.y+2);
+		cout << "score: 0";
+	      	while(1)
+	      	{
+			if(kbhit())/////////DETECT IMPUT///////
 			{
 				ch = _getch();
-				if(ch==75)//left
+				if(ch==-32)
 				{
-					MovePad('L');
-				}//if
-				else if(ch==77)//right
+					ch = _getch();
+					if(ch==75)//left
+					{
+						MovePad('L');
+					}//if
+					else if(ch==77)//right
+					{
+						MovePad('R');
+					}//else if
+				}//if ch-32
+				else if(ch==113)
 				{
-					MovePad('R');
-				}//else if
-			}//if ch-32
-			else if(ch==113)
+					ShowConsoleCursor(true);
+					exit(0);
+				}
+			}//if kbhit
+			if(tick%4==0)		
 			{
-				ShowConsoleCursor(true);
-				exit(0);
+				detect();
+				gotoxy(ball.x,ball.y);
+				cout << " ";	
+				MoveBall();
+				gotoxy(ball.x,ball.y);
+				cout << char(254);
+				gotoxy(8,paddle.y+2);
+				cout << score;
+				if(!win)
+					break;
 			}
-		}//if kbhit
-		if(tick%4==0)		
+			newtick();
+		}//while
+		ShowConsoleCursor(true);
+		system("cls");
+		if(!win)
 		{
-			detect();
-			gotoxy(ball.x,ball.y);
-			cout << " ";	
-			MoveBall();
-			gotoxy(ball.x,ball.y);
-			cout << char(254);
+			cout << "you lose!" << endl << "your score was " << score << endl;
 		}
-		newtick();
-	}//while
+		else
+		{
+		}
+			while(yesno != 'n'&&yesno != 'N'&&yesno != 'y'&& yesno != 'Y')
+			{
+				cout << "Play again? y/n\n";
+				cin >> yesno;
+			}
+			if(yesno != 'y'&&yesno !='Y')
+				break;
+	}while(running);
+			
 
 	return 0;
 }
