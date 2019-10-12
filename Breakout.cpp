@@ -219,7 +219,7 @@ void detect()
 		bouncewall();
 	else if(ball.y<=0)
 		bounceceil();
-	else if(ball.y==paddle.y-1)
+	else if(ball.y==paddle.y-1&&ball.x>=paddle.x&&ball.x<=paddle.x+20)
 		bouncepad();
 	else if(ball.y==paddle.y+1)
 		exit(0);//TODO: make a lose
