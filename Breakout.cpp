@@ -1,9 +1,9 @@
 #include<iostream>
 #include<string>
 #include<conio.h>
-#include"../Hide.h"
-#include"../Color.h"
-#include"../gotoxy.h"
+#include"Hide.h"
+#include"Color.h"
+#include"gotoxy.h"
 using namespace std;
 
 const int HEIGHT=15,WIDTH=35,rgb[6]={4,6,14,10,11,1};
@@ -55,7 +55,7 @@ void MoveBall()
 		ball.y++;
 		ball.x++;
 	}
-}
+}//moveball
 
 //////////////create tick timer////////////////////
 void newtick()
@@ -64,7 +64,7 @@ void newtick()
 	tick++;
 	if(tick >100000)
 		tick=1;
-}
+}//newtick
 
 //////////////create grid////////////////////
 void PrintBox()
@@ -80,7 +80,7 @@ void PrintBox()
 		cout << endl;
 	}
 	color(7);
-}
+}//PrintBox
 
 //////////////print paddle//////////////////////
 void PrintPad()
@@ -89,7 +89,7 @@ void PrintPad()
 	{
 		cout << char(219);
 	}
-}
+}//PrintPad
 
 //////////////move paddle//////////////////////
 void MovePad(char leftright)
@@ -120,7 +120,7 @@ void MovePad(char leftright)
 			cout <<char(219);
 		}
 	}
-}
+}//MovePad
 //////////////bounce//////////////////////
 void bouncewall()
 {
@@ -150,7 +150,7 @@ void bouncewall()
 		dir="down-left";
 	}
 
-}
+}//bouncewall
 void bounceceil()
 {
 	if(dir=="up")
@@ -178,7 +178,7 @@ void bounceceil()
 		dir="up-right";
 	}
 
-}
+}//bounceceil
 void bouncepad()
 {
 	if(ball.x>=paddle.x&&ball.x<=paddle.x+6)
@@ -213,7 +213,7 @@ void bouncepad()
 			dir="up";
 		}
 
-}
+}//bouncepad
 //////////////detect win   ////////////////////
 bool Won()
 {
@@ -226,7 +226,7 @@ bool Won()
 		}
 	}
 	return true;
-}
+}//won
 //////////////detect colision////////////////////
 void detect()
 {
